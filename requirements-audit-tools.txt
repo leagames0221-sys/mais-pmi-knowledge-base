@@ -3,4 +3,4 @@
 pip-audit>=2.7,<3.0
 
 # pip upgrade (CVE-2025-8869 / CVE-2026-1703 / CVE-2026-6357 fix、 pip-audit 検出順守)
-pip>=26.1,<27.0
+pip>=26.1.1,<27.0
