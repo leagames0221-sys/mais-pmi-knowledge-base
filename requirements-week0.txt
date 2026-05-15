@@ -7,7 +7,7 @@
 
 # Synthetic PMI case + paper generation (T1/T2/T3/T4 同 stack reuse)
 faker>=25.0,<30.0
-python-dotenv>=1.0,<2.0
+python-dotenv>=1.2.2,<2.0
 
 # Test infra
 pytest>=9.0.3,<10.0
