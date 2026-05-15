@@ -1,0 +1,67 @@
+name: pip-audit
+
+# T2 学び literal 反映 (doctrine: analogical-recall、 T2 commit 76eb283):
+# pip-audit に --disable-pip flag は use しない (hashed requirements 必須 or --no-deps 必須エラー)。
+# 本 file で flag 不在 を literal 維持、 T1-T5 sibling 共通 pattern。
+#
+# T2 起源 cross-PJ python-ml-stack template 順守 (internal ADR):
+# Layer 2 = --strict fail-on-vulnerability literal block 機能 active 必須、
+# continue-on-error: true は literal 禁止 (CVE 隠蔽 妥協 design pattern、 doctrine: client-no-recovery 違反)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "requirements*.txt"
+      - ".github/workflows/pip-audit.yml"
+  pull_request:
+    paths:
+      - "requirements*.txt"
+      - ".github/workflows/pip-audit.yml"
+  schedule:
+    - cron: "0 0 * * 1"  # weekly Monday 09:00 JST (00:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  audit-week0:
+    runs-on: ubuntu-latest
+    name: audit requirements-week0 (active stack, fail-on-high)
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Install pip-audit
+        run: pip install pip-audit
+      - name: Audit Week 0 active stack
+        run: pip-audit -r requirements-week0.txt --strict
+
+  audit-week1:
+    runs-on: ubuntu-latest
+    name: audit requirements-week1 (active stack, fail-on-high, internal ADR update reflect)
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Install pip-audit
+        run: pip install pip-audit
+      - name: Audit Week 1 active stack
+        # internal ADR update (2026-05-14): NetworkX leiden_communities + fugashi + cross-PJ python-ml-stack
+        # Standard Pin literal apply、 graspologic/leidenalg 不採用 (R8 + GPL viral 回避)
+        run: pip-audit -r requirements-week1.txt --strict
+
+  audit-week3:
+    runs-on: ubuntu-latest
+    name: audit requirements-week3 (Assistant + ingestion + citation active, fail-on-high, internal ADR § 8 reflect)
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Install pip-audit
+        run: pip install pip-audit
+      - name: Audit Week 3 active stack
+        # internal ADR § 8 (2026-05-14): docling + llama-index-core literal active 化 (Week 1 既 pin、 追加 dep ZERO)
+        # doctrine: python-supply-chain-5layer layer 2 = --strict fail-on-high literal block (continue-on-error: true 絶対不採用)
+        run: pip-audit -r requirements-week3.txt --strict

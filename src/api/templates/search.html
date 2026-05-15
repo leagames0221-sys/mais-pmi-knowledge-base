@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  {% from "_base_style.html" import base_style %}
+  {{ base_style() }}
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Similar PMI Case Search</h1>
+
+    <div class="meta">
+      合成 corpus: <strong>{{ pmi_count }}</strong> PMI cases + <strong>{{ paper_count }}</strong> reference papers<br>
+      ranking = 5 dim weighted similarity (industry 0.30 + culture 0.25 + size 0.20 + integration_type 0.15 + financial 0.10、 internal ADR § 3)
+    </div>
+
+    <a href="/" class="nav-link">← Back to landing</a>
+    <a href="/assistant" class="nav-link">🤖 Assistant 対話</a>
+
+    <h2>query</h2>
+    <form method="post" action="/search">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="query">query text (Day-1 や 文化統合 等の PMI 状況を記入):</label>
+      <textarea id="query" name="query" placeholder="例: Day-1 で組合存続を決定。 同族経営 + 関西本社 + 製造業、 retention rate 向上の path を検索したい。"></textarea>
+
+      <label for="industry">industry:</label>
+      <input type="text" id="industry" name="industry" value="製造業">
+
+      <label for="size_band">size_band:</label>
+      <select id="size_band" name="size_band">
+        <option value="under_50">under_50</option>
+        <option value="50-100">50-100</option>
+        <option value="100-300" selected>100-300</option>
+        <option value="300-500">300-500</option>
+        <option value="500-1000">500-1000</option>
+        <option value="over_1000">over_1000</option>
+      </select>
+
+      <label for="culture">culture_profile:</label>
+      <input type="text" id="culture" name="culture" value="同族経営、 関西本社">
+
+      <label for="financial">financial_band:</label>
+      <select id="financial" name="financial">
+        <option value="5-10">5-10</option>
+        <option value="10-30">10-30</option>
+        <option value="30-50" selected>30-50</option>
+        <option value="50-100">50-100</option>
+        <option value="over_100">over_100</option>
+      </select>
+
+      <label for="integration_type">integration_type:</label>
+      <select id="integration_type" name="integration_type">
+        <option value="standalone">standalone</option>
+        <option value="tuck-in" selected>tuck-in</option>
+        <option value="asset_purchase">asset_purchase</option>
+        <option value="merger_of_equals">merger_of_equals</option>
+      </select>
+
+      <button type="submit">🔍 similar case を surface</button>
+    </form>
+
+    <div class="footer">
+      <span class="brand">MAIS PMI Knowledge Base</span> — PoC demo (合成 corpus、 PII 不発)
+    </div>
+  </div>
+</body>
+</html>

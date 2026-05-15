@@ -1,0 +1,31 @@
+name: dependency-review
+
+# GitHub Native Dependency Review action (internal ADR Layer 5 supply chain 防御 path)
+# PR 時 dep tree 差分 literal verify、 既知 CVE 検出 + license check で literal block。
+# doctrine: npm-supply-chain-3layer Python 同型 (doctrine: python-supply-chain-5layer、 cross-PJ python-ml-stack template Layer 5)。
+#
+# 🚧 PoC PRIVATE + GHAS なし state では literal 非機能 (foundation install のみ、 全 PR で error)。
+#    受託 deploy 時 (GHAS 有効化 OR repo PUBLIC 化 OR pip-audit on PR alternative) で literal active 化。
+#    詳細: (internal knowledge library)/agent-architecture/security/templates/python-ml-stack/README.md
+#          § 「🚀 正式アシスタントス (受託 deploy) 前 ★★★ checklist」
+
+on:
+  pull_request:
+    paths:
+      - "requirements*.txt"
+      - ".github/workflows/dependency-review.yml"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Dependency Review (GitHub Native)
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          comment-summary-in-pr: on-failure

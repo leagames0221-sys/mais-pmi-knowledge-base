@@ -1,0 +1,35 @@
+{% macro base_style() %}
+<style>
+  body { font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif; background: #0a0a0a; color: #f3e1a3; margin: 0; padding: 40px; line-height: 1.6; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1, h2, h3 { color: #d4af37; font-family: 'Noto Serif JP', serif; }
+  h1 { border-bottom: 2px solid #d4af37; padding-bottom: 16px; margin-bottom: 24px; }
+  h2 { margin-top: 36px; border-left: 4px solid #d4af37; padding-left: 12px; }
+  h3 { margin-top: 24px; color: #c9a227; }
+  .brand { color: #d4af37; font-weight: bold; letter-spacing: 0.05em; }
+  .meta { background: #1a1a1a; padding: 16px; margin: 16px 0; border-left: 3px solid #d4af37; }
+  table { width: 100%; border-collapse: collapse; background: #1a1a1a; margin: 16px 0; font-size: 0.92em; }
+  th, td { padding: 10px; text-align: left; border-bottom: 1px solid #2c2c2c; }
+  th { background: #2c2c2c; color: #d4af37; font-weight: bold; }
+  tr:hover { background: #1f1f1f; }
+  .nav-link { display: inline-block; background: #1a1a1a; color: #d4af37; padding: 10px 20px; margin-right: 12px; margin-bottom: 8px; text-decoration: none; border: 1px solid #d4af37; transition: background 0.2s; }
+  .nav-link:hover { background: #d4af37; color: #0a0a0a; }
+  .conf-high { color: #d4af37; font-weight: bold; }
+  .conf-mid { color: #c9a227; }
+  .conf-low { color: #6b6b6b; }
+  .badge { display: inline-block; background: #2c2c2c; color: #f3e1a3; padding: 2px 8px; font-size: 0.85em; margin: 2px 4px 2px 0; border: 1px solid #444; }
+  .badge-pmi { border-color: #d4af37; color: #d4af37; }
+  .badge-ref { border-color: #c9a227; color: #c9a227; }
+  form { background: #1a1a1a; padding: 24px; margin: 16px 0; border: 1px solid #2c2c2c; }
+  label { display: block; color: #d4af37; margin-top: 12px; margin-bottom: 6px; font-weight: bold; }
+  input[type="text"], textarea, select { width: 100%; box-sizing: border-box; background: #0a0a0a; color: #f3e1a3; border: 1px solid #444; padding: 10px; font-family: inherit; font-size: 1em; }
+  textarea { min-height: 100px; resize: vertical; }
+  button { background: #d4af37; color: #0a0a0a; border: none; padding: 12px 32px; margin-top: 20px; font-size: 1em; font-weight: bold; cursor: pointer; }
+  button:hover { background: #c9a227; }
+  .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #2c2c2c; color: #6b6b6b; font-size: 0.85em; }
+  .card { background: #1a1a1a; padding: 20px; margin: 12px 0; border-left: 4px solid #d4af37; }
+  .rank { color: #d4af37; font-size: 1.3em; font-weight: bold; margin-right: 12px; }
+  .recommendation-text { color: #f3e1a3; margin: 8px 0; }
+  .citation { margin-top: 8px; }
+</style>
+{% endmacro %}

@@ -1,0 +1,16 @@
+# Week 3 — internal ADR § 8 順守 (Assistant + RAG paper ingestion + Citation infra active 化)
+# 追加新規 dep ZERO: Week 1 で literal pin 済の docling + llama-index-core が Week 3 で literal active 化
+# doctrine: python-supply-chain-5layer 5 layer 順守 (Standard Pin + pip-audit strict + Dependabot + lock + dep-review)
+#
+# 新規 active stack:
+# - docling (T2 inherit、 MIT、 PDF parse → markdown sections、 internal ADR § 2 parse_paper_docling)
+# - llama-index-core (T2/T3/T4 inherit、 MIT、 CitationQueryEngine bridge、 internal ADR § 3 build_llamaindex_citation_engine)
+# - sentence-transformers + faiss-cpu (Week 1 既 active、 Week 3 で literal embed_chunks + PaperIndex active)
+#
+# 不追加 (8 gate gate 8 swap path 連携): anthropic Citations API は anthropic SDK 内 (Week 1 既 pin) で literal cover
+
+# === Week 1 inherit (NetworkX + cross-PJ python-ml-stack template + fugashi + LangGraph 系) ===
+-r requirements-week1.txt
+
+# === Week 3 で literal active 化 (Week 1 既 pin、 追加 dep ZERO) ===
+# 全 Week 1 -r で literal inherit 済、 本 file = Week 3 specific dep marker のみ (将来 Citation API SDK 等 active 化 trigger 点)

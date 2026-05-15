@@ -1,0 +1,90 @@
+name: drift-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  drift-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: internal knowledge base 5 file 存在 check (doctrine: handoff-duty)
+        run: |
+          set -e
+          for f in productContext activeContext decisionLog systemPatterns logbook; do
+            test -f "(internal config)/internal_kb/${f}.md" || { echo "missing internal_kb/${f}.md"; exit 1; }
+          done
+
+      - name: Tier 2 CLAUDE.md 存在 check
+        run: test -f CLAUDE.md
+
+      - name: README literal file ref 実在 check
+        run: |
+          set -e
+          test -f requirements-week0.txt
+          test -f docs/discovery_brief.md
+          test -f .github/dependabot.yml
+
+      - name: internal ADR cross-repo citation marker check (T1 brand identity SSoT)
+        run: |
+          grep -r "mais-deal-matching" CLAUDE.md README.md (internal config)/internal_kb/ docs/ || { echo "internal ADR inherit citation missing"; exit 1; }
+
+      - name: T2 sibling citation check (T2 docling reuse marker)
+        run: |
+          grep -r "mais-dd-workbench" CLAUDE.md README.md (internal config)/internal_kb/ docs/ || { echo "T2 sibling citation missing"; exit 1; }
+
+      - name: T3 sibling citation check (T3 jp Day-1 pattern analogical marker)
+        run: |
+          grep -r "mais-day1-cockpit" CLAUDE.md README.md (internal config)/internal_kb/ docs/ || { echo "T3 sibling citation missing"; exit 1; }
+
+      - name: T4 sibling citation check (T4 → T5 入出力契約 internal ADR inherit marker)
+        run: |
+          grep -r "mais-pmi-cockpit" CLAUDE.md README.md (internal config)/internal_kb/ docs/ || { echo "T4 sibling citation missing"; exit 1; }
+
+      - name: video-pipeline cross-PJ SSoT citation check
+        run: |
+          grep -rE "(video-pipeline|TTS engine)" CLAUDE.md README.md (internal config)/internal_kb/ docs/ || { echo "video-pipeline cross-PJ SSoT citation missing"; exit 1; }
+
+      - name: python-ml-stack cross-PJ template citation check (T2 起源、 internal ADR 順守)
+        run: |
+          grep -rE "(python-ml-stack|Standard Pin|cross-PJ template)" CLAUDE.md README.md (internal config)/internal_kb/ docs/ || { echo "python-ml-stack template citation missing"; exit 1; }
+
+      - name: PII boundary check (operational に PII field 名 literal 出現禁止、 T5 module 構造)
+        run: |
+          set -e
+          # Blocklist (PII field literal 禁止): src/ontology + src/retrieval + src/assistant + src/integration
+          # + src/pipeline + src/operational + src/citation + src/api + src/llm (LLM 内 PII 保持禁止)
+          # Allowlist (PII field literal 可): src/schema (type 定義) + src/data_gen (合成 PMI case Faker output)
+          # + src/ingestion (paper raw ingestion path、 Presidio redact 前) + src/vault (vault 内必要)
+          # SSoT 例外 (2026-05-14 hardening phase fix):
+          #   - src/retrieval/graphrag_native.py = VAULT_FIELDS SSoT 定義 (literal 必要、 他 module は import only)
+          #   - src/operational/__init__.py = docstring の例示文字列 (doctrine: doc-sync)
+          if [ -d src ]; then
+            ! grep -rE \
+              --exclude=graphrag_native.py \
+              --exclude=__init__.py \
+              "(name_full|email|phone|address_full|raw_self_intro|raw_description|name_kana|dob_exact|contact_email|contact_phone|contact_person|raw_text|employee_name|vendor_contact|signatory_name|client_company_name_real|deal_consideration_real)" \
+              $(ls -d src/ontology src/retrieval src/assistant src/integration src/pipeline src/operational src/citation src/api src/llm 2>/dev/null) 2>/dev/null || { echo "PII field 名 literal in disallowed module"; exit 1; }
+          fi
+
+      - name: pip-audit --disable-pip flag 不在 verify (T2 学び doctrine: analogical-recall)
+        # pip-audit.yml の run: 行で actual command として --disable-pip が使われていないか check。
+        run: |
+          set -e
+          ! grep -E "^\s*run:.*pip-audit.*--disable-pip" .github/workflows/pip-audit.yml 2>/dev/null || { echo "T2 真 bug 再発: pip-audit --disable-pip flag が actual command として検出 (T2 commit 76eb283 で literal fix 済の同 pattern)"; exit 1; }
+
+      - name: Run pytest (fast only, slow integration tests deselected)
+        run: |
+          if [ -d tests ] && find tests -name "test_*.py" | grep -q .; then
+            pip install -r requirements-week0.txt
+            pytest -m "not slow" tests/
+          else
+            echo "no tests yet (scaffold phase)"
+          fi

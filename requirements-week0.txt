@@ -1,0 +1,23 @@
+# Week 0 — scaffold + audit phase (doctrine: external-source-audit 通過待ち、 全 ★★★ green flag 予定)
+# Week 1+ で heavy deps (langgraph + llama-index + sentence-transformers + faiss-cpu + transformers + docling) を追加 audit + install
+# T2 起源 cross-PJ python-ml-stack template literal inherit (internal ADR):
+#   transformers>=5.0,<6.0  /  sentence-transformers>=5.4,<6.0  (CVE-2026-1839 fix 込み)
+# CVE-2025-71176 (pytest privilege escalation) fix 維持: pytest>=9.0.3
+# T2/T3 学び literal 反映 (doctrine: analogical-recall): pip-audit CI で --disable-pip flag 使用禁止
+
+# Synthetic PMI case + paper generation (T1/T2/T3/T4 同 stack reuse)
+faker>=25.0,<30.0
+python-dotenv>=1.0,<2.0
+
+# Test infra
+pytest>=9.0.3,<10.0
+pytest-cov>=5.0,<7.0
+
+# Schema validation
+pydantic>=2.5,<3.0
+
+# Audit + drift CI
+pip-audit>=2.7,<3.0
+
+# Pydantic v2 (schema validation、 internal ADR 順守、 src/schema/types.py で literal use)
+# 既 pydantic>=2.5,<3.0 declared 上で confirm、 Week 1 schema regression test 前提

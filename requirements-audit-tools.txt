@@ -1,0 +1,6 @@
+# pip-audit security verify tool (PyPA + Trail of Bits 公式、 Apache-2.0)
+# doctrine: python-supply-chain-5layer layer 2 (--strict fail-on-vulnerability) literal active 用 bootstrap
+pip-audit>=2.7,<3.0
+
+# pip upgrade (CVE-2025-8869 / CVE-2026-1703 / CVE-2026-6357 fix、 pip-audit 検出順守)
+pip>=26.1,<27.0
