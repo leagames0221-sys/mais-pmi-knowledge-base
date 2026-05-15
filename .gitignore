@@ -1,0 +1,86 @@
+# Security Master Layer 1 — credentials + secrets literal block
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+.credentials
+
+# Synthetic PMI case data (large + repo 外保管)
+data/pmi_synthetic/**/*.json
+data/pmi_synthetic/**/*.jsonl
+data/pmi_synthetic/**/*.parquet
+data/pmi_synthetic/**/*.csv
+data/papers_synthetic/**/*.json
+data/papers_synthetic/**/*.jsonl
+data/cache/
+data/audit/*.jsonl
+data/audit/**/*.jsonl
+data/vault/*.enc
+
+# RAG index cache (faiss + sentence-transformers + LlamaIndex)
+data/index/
+data/embeddings/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Model cache (HF / sentence-transformers / docling)
+.cache/
+~/.cache/huggingface/
+*.safetensors
+*.bin
+*.pth
+*.joblib
+
+# LangGraph checkpoint state (Week 2+ active 化、 local persist のみ)
+.langgraph_checkpoint/
+*.langgraph_state
+
+# Video pipeline output
+out_video/
+*.mp4
+*.webm
+*.wav
+*.srt
+
+# Third-party engine binaries (literal 大容量 + per-host install、 T2 .vendor/ literal 共有)
+.vendor/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Security Master telemetry (T2 学び literal 反映)
+.security_telemetry.jsonl
+.security_heartbeat.json
+.security_heartbeat.jsonl
+internal/.git_secret_scan.heartbeat
+internal/.security_intercept.heartbeat
+internal-heartbeat-files
+internal-jsonl-files
+.venv/
+requirements-*.lock

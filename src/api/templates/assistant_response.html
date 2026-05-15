@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  {% from "_base_style.html" import base_style %}
+  {{ base_style() }}
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 Assistant Recommendation</h1>
+
+    <a href="/assistant" class="nav-link">← New query</a>
+    <a href="/search" class="nav-link">🔍 Similar Case Search</a>
+
+    <div class="meta">
+      <strong>LIL id</strong>: {{ assistant_query.lil_id }} |
+      <strong>user_role</strong>: {{ user_role }} |
+      <strong>audit_at</strong>: {{ assistant_query.audit_at }}<br>
+      <strong>query</strong>: {{ query }}
+    </div>
+
+    <h2>ranked recommendation (listwise CoT、 5 dim weighted)</h2>
+
+    {% for rec in recommendations %}
+      <div class="card">
+        <div>
+          <span class="rank">Rank {{ rec.rank }}</span>
+          <span class="{% if rec.confidence >= 0.8 %}conf-high{% elif rec.confidence >= 0.6 %}conf-mid{% else %}conf-low{% endif %}">
+            confidence = {{ "%.2f"|format(rec.confidence) }}
+          </span>
+        </div>
+        <p class="recommendation-text">{{ rec.recommendation_redacted }}</p>
+        <div class="citation">
+          <strong>cite:</strong>
+          {% for c in rec.citation_array %}
+            {% if c.startswith("REF-") %}
+              <span class="badge badge-ref">{{ c }}</span>
+            {% elif c.startswith("PMI-") %}
+              <span class="badge badge-pmi">{{ c }}</span>
+            {% else %}
+              <span class="badge">{{ c }}</span>
+            {% endif %}
+          {% else %}
+            <span style="color: #6b6b6b;">[no citation]</span>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <p style="color: #6b6b6b;">recommendation 未生成 (LLM response 解析 error or empty fixture)</p>
+    {% endfor %}
+
+    <h2>audit trail</h2>
+    <div class="meta" style="font-size: 0.9em;">
+      retrieved_cases: {{ assistant_query.retrieved_cases|length }} 件 |
+      retrieved_papers: {{ assistant_query.retrieved_papers|length }} 件 |
+      recommendations_ranked: {{ assistant_query.recommendation_ranked|length }} 件<br>
+      operational audit log: <code>data/audit/assistant_log.jsonl</code> append-only<br>
+      vault layer (raw query/user name): <code>data/audit/assistant_vault.jsonl</code> (Fernet 暗号化、 Week 4 src/vault/ active 化 trigger)
+    </div>
+
+    <div class="footer">
+      <span class="brand">MAIS PMI Knowledge Base</span> — Assistant 型対話 audit log full active (Mode 9 markdown strip 防御済、 cross-PJ failure_modes catalog)
+    </div>
+  </div>
+</body>
+</html>

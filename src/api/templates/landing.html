@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  {% from "_base_style.html" import base_style %}
+  {{ base_style() }}
+</head>
+<body>
+  <div class="container">
+    <h1>🗺 <span class="brand">MAIS PMI Knowledge Base</span><br>PMI Knowledge Base</h1>
+
+    <div class="meta">
+      <strong>scope</strong>: M&A advisory engagement § T5 — 過去 PMI 案件 + top-tier consulting firm/top-tier PMI advisor/top-tier consulting firm paper の knowledge base<br>
+      <strong>機能</strong>: ① ADR 形式 PMI 構造化 / ② paper RAG + PMI engagement records join / ③ 多軸類似 case auto-surface (5 dim weighted) / ④ Assistant 型対話
+    </div>
+
+    <h2>機能</h2>
+    <a href="/search" class="nav-link">🔍 Similar Case Search</a>
+    <a href="/assistant" class="nav-link">🤖 Assistant 対話</a>
+    <a href="/api/health" class="nav-link">💚 API Health</a>
+
+    <h2>tech stack</h2>
+    <p>
+      <span class="badge">GraphRAG コア要素 自作</span>
+      <span class="badge">NetworkX louvain_communities (BSD-3、 graph backend mode fix supersede)</span>
+      <span class="badge">fugashi + PMI domain dictionary 32 canonical</span>
+      <span class="badge">5 dim weighted similarity</span>
+      <span class="badge">LangGraph 9 node DAG</span>
+      <span class="badge">MockProvider + ClaudeProvider + OllamaProvider</span>
+    </p>
+
+    <h2>verify evidence</h2>
+    <p>
+      <span class="badge badge-pmi">8 gate AI 単独 PASS 8/8</span>
+      <span class="badge badge-pmi">207 test PASS in 1.02s</span>
+      <span class="badge badge-pmi">pip-audit 0 CVE</span>
+      <span class="badge badge-ref">Ollama gemma3:4b e2e smoke ✅</span>
+    </p>
+
+    <div class="footer">
+      <span class="brand">MAIS PMI Knowledge Base</span> — Week 4 PoC demo<br>
+      合成 PMI case + 合成 paper corpus (PII 不発設計)<br>
+      移植段階: 実 paper individual license confirm 必須 + 顧客 sandbox dry-run
+    </div>
+  </div>
+</body>
+</html>

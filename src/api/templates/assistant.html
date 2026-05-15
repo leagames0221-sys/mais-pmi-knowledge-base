@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  {% from "_base_style.html" import base_style %}
+  {{ base_style() }}
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 Assistant — Junior Consultant Query</h1>
+
+    <div class="meta">
+      <strong>Assistant</strong> = listwise CoT で過去類似 case + paper + cross-case pattern から ranked recommendation を surface する junior consultant 支援 agent。<br>
+      audit trail: 全 query は AssistantQuery schema で literal 永続化。
+    </div>
+
+    <a href="/" class="nav-link">← Back to landing</a>
+    <a href="/search" class="nav-link">🔍 Similar Case Search</a>
+
+    <h2>query</h2>
+    <form method="post" action="/assistant">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="query">junior consultant の query (200 字以内、 PII redacted state):</label>
+      <textarea id="query" name="query" maxlength="200" placeholder="例: Day-1 で組合存続 vs 解消 path の判断、 同族経営 + 関西本社 + 製造業 retention rate を最大化する PMI strategy。"></textarea>
+
+      <label for="user_role">user_role:</label>
+      <select id="user_role" name="user_role">
+        <option value="junior_consultant" selected>junior_consultant</option>
+        <option value="senior_consultant">senior_consultant</option>
+        <option value="fde">fde</option>
+        <option value="admin">admin</option>
+      </select>
+
+      <button type="submit">🤖 Assistant recommendation 生成</button>
+    </form>
+
+    <div class="footer">
+      PoC = MockProvider fixture deterministic response (LLM call cost ZERO)、 移植段階 = OllamaProvider (gemma3:4b、 local data egress ZERO) or ClaudeProvider (Anthropic credit) literal swap。<br>
+      <span class="brand">MAIS PMI Knowledge Base</span> — doctrine: analogical-recall doctrine 実装基盤
+    </div>
+  </div>
+</body>
+</html>

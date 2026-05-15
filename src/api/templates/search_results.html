@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  {% from "_base_style.html" import base_style %}
+  {{ base_style() }}
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Similar PMI Cases (top-{{ ranked|length }})</h1>
+
+    <a href="/search" class="nav-link">← New search</a>
+    <a href="/assistant" class="nav-link">🤖 Assistant 対話</a>
+
+    <div class="meta">
+      <strong>query</strong>: {{ query }}<br>
+      <strong>query case</strong>: industry={{ query_case.industry }}、 size={{ query_case.size_band }}、 culture={{ query_case.culture_profile }}、 integration={{ query_case.integration_type }}、 financial={{ query_case.financial_band }}
+    </div>
+
+    <h2>PMI domain terms 検出</h2>
+    <p>
+      {% for term in pmi_terms %}
+        <span class="badge badge-pmi">{{ term }}</span>
+      {% else %}
+        <span style="color: #6b6b6b;">(domain term 未検出)</span>
+      {% endfor %}
+    </p>
+
+    <h2>多軸 weighted similarity 結果 (5 dim、 original proposal line 461 「2-3 件」 順守)</h2>
+
+    {% for score in ranked %}
+      <div class="card">
+        <div>
+          <span class="rank">#{{ loop.index }}</span>
+          <strong>{{ score.candidate_pmi_id }}</strong>
+          <span class="conf-high">aggregate = {{ "%.3f"|format(score.aggregate_score) }}</span>
+        </div>
+        <table>
+          <tr>
+            <th>industry (w=0.30)</th>
+            <th>culture (w=0.25)</th>
+            <th>size (w=0.20)</th>
+            <th>integration (w=0.15)</th>
+            <th>financial (w=0.10)</th>
+          </tr>
+          <tr>
+            <td>{{ "%.2f"|format(score.industry_score) }}</td>
+            <td>{{ "%.2f"|format(score.culture_score) }}</td>
+            <td>{{ "%.2f"|format(score.size_score) }}</td>
+            <td>{{ "%.2f"|format(score.integration_type_score) }}</td>
+            <td>{{ "%.2f"|format(score.financial_score) }}</td>
+          </tr>
+        </table>
+      </div>
+    {% else %}
+      <p style="color: #6b6b6b;">類似 case 未検出 (corpus 未 build、 5 dim 全 mismatch、 or self-exclude のみ)</p>
+    {% endfor %}
+
+    <div class="footer">
+      <span class="brand">MAIS PMI Knowledge Base</span> — 5 dim weighted similarity (PoC = hardcode weight、 移植 = learning-based path 確保)
+    </div>
+  </div>
+</body>
+</html>
