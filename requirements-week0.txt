@@ -17,7 +17,7 @@ pytest-cov>=5.0,<7.0
 pydantic>=2.5,<3.0
 
 # Audit + module boundary check
-pip-audit>=2.7,<3.0
+pip-audit>=2.10.0,<3.0
 
 # Pydantic v2
 # 既 pydantic>=2.5,<3.0 declared 上で confirm、 Week 1 schema regression test 前提
