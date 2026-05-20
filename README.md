@@ -97,7 +97,7 @@ GraphRAG core (entity / relation / community detection via NetworkX Louvain) imp
 | **5-axis weighted similarity** | Industry / scale / culture / financial / integration type — weights tunable per engagement type |
 | **AI Assistant dialogue** | LangGraph 9-node state graph: query → 5-stage hybrid retrieval → 5-axis similar cases → citation array → ranked recommendation + audit log |
 | **Paper RAG integration** | Docling parses PDF/Word/Excel/PPT → chunked + embedded + indexed; joins with engagement records on retrieval |
-| **Commercial-grade hardening** | env-var-gated portable config: HTTPBasic auth, CSRF token, in-process per-IP rate-limit, persistent audit dir, PII redaction layer with block / warn modes |
+| **Hardened controls (PoC-scoped)** | env-var-gated portable config: HTTPBasic auth, CSRF token, in-process per-IP rate-limit, persistent audit dir, PII redaction layer with block / warn modes |
 | **Vault Pattern** | PII (consultant identifiers, paper signatories) Fernet-encrypted at rest |
 
 ---
