@@ -160,7 +160,7 @@ SESSION_SECRET=<token_urlsafe>
 SYNTHETIC_SEED=20260514
 DATA_DIR=./data
 
-# Production overrides (commercial-grade hardening)
+# Production overrides (hardened controls — see Shared design principles table)
 T5_LLM_PROVIDER=ollama       # default mock (test) / production = ollama
 T5_OLLAMA_MODEL=gemma3:4b    # default
 T5_AUTH_REQUIRED=1           # HTTPBasic auth
