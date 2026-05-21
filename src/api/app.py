@@ -276,7 +276,7 @@ async def landing(request: Request, _auth: None = Depends(_require_auth)) -> Any
 @app.get("/health")
 async def health() -> dict[str, str]:
     """health endpoint = literal 認証不要 (load balancer probe 等用、 production canonical)。"""
-    return {"status": "ok", "service": "mais-t5-pmi-knowledge-base", "version": "0.6.0"}
+    return {"status": "ok", "service": "mais-pmi-knowledge-base", "version": "0.6.0"}
 
 
 @app.get("/search", response_class=HTMLResponse)
@@ -422,7 +422,7 @@ async def api_health() -> JSONResponse:
     """JSON health endpoint (T1-T4 inherit pattern、 認証不要 = canonical for probes)。"""
     return JSONResponse(
         content={
-            "service": "mais-t5-pmi-knowledge-base",
+            "service": "mais-pmi-knowledge-base",
             "version": "0.6.0",
             "status": "ok",
             "endpoints": ["/", "/search", "/assistant", "/health", "/api/health"],

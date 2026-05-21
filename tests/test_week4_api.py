@@ -20,7 +20,7 @@ def test_health_json():
     assert r.status_code == 200
     body = r.json()
     assert body["status"] == "ok"
-    assert body["service"] == "mais-t5-pmi-knowledge-base"
+    assert body["service"] == "mais-pmi-knowledge-base"
 
 
 def test_api_health_endpoints_list():
