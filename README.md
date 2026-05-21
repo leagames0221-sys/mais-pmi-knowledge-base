@@ -6,6 +6,23 @@
 [![pip-audit](https://github.com/leagames0221-sys/mais-pmi-knowledge-base/actions/workflows/pip-audit.yml/badge.svg)](https://github.com/leagames0221-sys/mais-pmi-knowledge-base/actions/workflows/pip-audit.yml)
 [![python](https://img.shields.io/badge/python-3.12-blue)]()
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Constraint: zero credit card](https://img.shields.io/badge/Constraint-zero%20credit%20card-blue)](#selected-under)
+[![Constraint: local LLM (default)](https://img.shields.io/badge/Constraint-local%20LLM%20%28default%29-blue)](#selected-under)
+[![Constraint: free / OSS only](https://img.shields.io/badge/Constraint-free%20%2F%20OSS%20only-blue)](#selected-under)
+[![Constraint: security defense-in-depth](https://img.shields.io/badge/Constraint-security%20defense--in--depth-blue)](#selected-under)
+
+---
+
+## Selected under
+
+> **The 4-constraint set** (applied across the full portfolio — verified consistent across all 11 portfolio repos):
+>
+> 1. **Zero credit card** — no paid API / cloud service required for the default path. A reviewer can clone, install, and run with $0 spend and no payment method on file.
+> 2. **Local LLM (default)** — when an LLM is involved, the default path is local (Ollama / similar) or deterministic mock. Paid cloud LLM is opt-in via env var, never default.
+> 3. **Free / OSS only** — every runtime dependency is permissively-licensed open source (MIT / Apache-2.0 / BSD-3); no proprietary SDK at build time.
+> 4. **Security defense-in-depth** — secrets-scan CI + `.gitignore` hardening, encrypted-at-rest where PII is involved, append-only audit logging where applicable, dep-vuln gating (`pip-audit` / `pnpm audit`), paid-API constructor gate where applicable.
+
+This repo specifically demonstrates: GraphRAG retrieval + NetworkX Louvain community detection + 5-axis weighted similarity, all running on tier 1 alone. Production hardening (HTTPBasic auth + CSRF + rate-limit + PII redaction + audit log) is orthogonal to the LLM tier. The [Configuration (env)](#configuration-env) section's 3-tier swap shows the single point where paid APIs enter the system (tier 3 only).
 
 ---
 
