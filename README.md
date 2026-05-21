@@ -152,17 +152,43 @@ uvicorn src.api.app:app --reload --port 8000
 
 ## Configuration (env)
 
+The knowledge base ships with a **3-tier LLM swap path** for the AI Assistant dialogue + entity extraction. Pick the tier that matches your environment — `T5_LLM_PROVIDER=mock` is the test/dev default; production hardening adds auth + rate-limit + audit on top.
+
+### Tier 1 — PoC default (zero cost, zero credit card, runs offline)
+
 ```bash
-# Development
-ANTHROPIC_API_KEY=sk-ant-...           # required for AI Assistant dialogue + entity extraction
-VAULT_KEY=<fernet key>
-SESSION_SECRET=<token_urlsafe>
+# T5_LLM_PROVIDER=mock is the implicit default; AI Assistant dialogue +
+# GraphRAG retrieval + 5-axis similarity all work on deterministic templated
+# outputs without any external API call.
+VAULT_KEY=<fernet key>                  # always required
+SESSION_SECRET=<token_urlsafe>          # always required
 SYNTHETIC_SEED=20260514
 DATA_DIR=./data
+```
 
-# Production overrides (hardened controls — see Shared design principles table)
-T5_LLM_PROVIDER=ollama       # default mock (test) / production = ollama
-T5_OLLAMA_MODEL=gemma3:4b    # default
+### Tier 2 — Local LLM swap (still zero cost, zero credit card; uses your own GPU/CPU)
+
+For developers / customers who want real LLM Assistant dialogue without paid APIs. Requires [Ollama](https://ollama.com/) running locally with a model pulled.
+
+```bash
+T5_LLM_PROVIDER=ollama                  # switches default_provider() to Ollama
+T5_OLLAMA_MODEL=gemma3:4b               # default (other supported: qwen2.5:7b, llama3.x, etc.)
+# ... plus the always-required vars from tier 1
+```
+
+### Tier 3 — Customer / production swap (paid API; the only tier that touches credit-card-backed services)
+
+For customer deployments where higher Assistant quality or hosted-model SLA is required. **This is the only place credit-card-backed services enter the system** — paste the customer's key here.
+
+```bash
+T5_LLM_PROVIDER=claude                  # or "gemini" / future provider
+ANTHROPIC_API_KEY=sk-ant-...            # paste customer's key here (tier 1 + tier 2 never read this var)
+# ... plus the always-required vars from tier 1
+```
+
+### Production hardening overrides (orthogonal to LLM tier — apply on tier 2 or tier 3)
+
+```bash
 T5_AUTH_REQUIRED=1           # HTTPBasic auth
 T5_BASIC_USER=<username>
 T5_BASIC_PASS=<password>
@@ -171,6 +197,8 @@ T5_RATE_LIMIT_PER_MIN=60
 T5_AUDIT_DIR=data/audit/assistant
 T5_BLOCK_PII=1               # PII redaction enforce
 ```
+
+GraphRAG retrieval + NetworkX Louvain community detection + 5-axis weighted similarity all run on tier 1 alone. The LLM tier is only consulted by the AI Assistant dialogue node and the entity-extraction step at ingestion — every preceding stage ships even when the LLM tier is offline.
 
 ---
 
