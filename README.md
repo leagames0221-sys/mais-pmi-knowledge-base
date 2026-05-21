@@ -52,6 +52,19 @@ GraphRAG core (entity / relation / community detection via NetworkX Louvain) imp
 
 ---
 
+## Why this is distinct (existing alternatives + delta)
+
+Two adjacent tool categories address parts of the PMI knowledge problem in 2026, but neither closes the past-case retrieval loop the way a senior consultant uses it:
+
+- **Generic GraphRAG frameworks** (Microsoft GraphRAG / LlamaIndex Knowledge Graph / LangChain GraphCypher / Neo4j LLM Graph Builder) — provide graph-RAG primitives but do not encode PMI-specific entity taxonomy (engagement / decision / outcome / pattern) or the 5-axis weighted similarity domain knowledge.
+- **Knowledge management platforms** (Notion / Confluence / SharePoint / GitBook) — store unstructured documents with text search but do not surface the "5 most-similar past cases ranked by industry / scale / culture / financial / integration type" view a senior partner uses to anchor recommendations.
+
+MAIS PMI Knowledge Base layers PMI domain ontology + 5-axis weighted similarity on top of self-built GraphRAG (NetworkX Louvain community detection), so junior consultants get the same case-pattern surface a senior would pull from memory — with citation link-backs to source ADRs + research papers.
+
+**Target user**: junior PMI consultants (≤ 1 year in role) onboarding into a firm with significant past-deal pattern memory locked in tribal lore, plus senior partners who want a structured query surface over their own historical engagements.
+
+---
+
 ## Architecture
 
 ```
