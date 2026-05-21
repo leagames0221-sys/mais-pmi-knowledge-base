@@ -235,7 +235,7 @@ def _attach_csrf_cookie(response: Any, token: str) -> Any:
 BASE_DIR = Path(__file__).resolve().parent
 TEMPLATES = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
-app = FastAPI(title="MAIS / T5 PMI Knowledge Base")
+app = FastAPI(title="MAIS PMI Knowledge Base")
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
 
@@ -268,7 +268,7 @@ async def landing(request: Request, _auth: None = Depends(_require_auth)) -> Any
     response = TEMPLATES.TemplateResponse(
         request=request,
         name="landing.html",
-        context={"title": "MAIS / T5 PMI Knowledge Base", "csrf_token": csrf},
+        context={"title": "MAIS PMI Knowledge Base", "csrf_token": csrf},
     )
     return _attach_csrf_cookie(response, csrf)
 
