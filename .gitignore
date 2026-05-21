@@ -62,6 +62,10 @@ out_video/
 *.webm
 *.wav
 *.srt
+# 例外: ship する demo MP4 のみ track
+!out_video/
+!out_video/mais_pmi_knowledge_base_demo.mp4
+out_video/_temp/
 
 # Third-party engine binaries (literal 大容量 + per-host install、 T2 .vendor/ literal 共有)
 .vendor/

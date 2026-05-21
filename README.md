@@ -26,6 +26,18 @@ This repo specifically demonstrates: GraphRAG retrieval + NetworkX Louvain commu
 
 ---
 
+## 🎬 Demo walkthrough (~2-minute narrated video)
+
+End-to-end demo of the knowledge base — landing → tech stack + verify badges → Similar Case Search (5-dim weighted similarity, Day-1 組合存続 query) → results panel → AI Assistant dialogue (junior consultant role) → recommendation with citation array + similar cases + audit log. Japanese narration by [AivisSpeech](https://aivis-project.com/) (まお おちついた, Style-Bert-VITS2), 1920×1080 H.264.
+
+> [▶️ **mais_pmi_knowledge_base_demo.mp4**](out_video/mais_pmi_knowledge_base_demo.mp4) — 122.72 s · 5.5 MB · 16 scenes with burned-in SRT subtitles.
+
+<video src="out_video/mais_pmi_knowledge_base_demo.mp4" controls width="100%"></video>
+
+**Reproducible pipeline** ([scripts/produce_video.py](scripts/produce_video.py), [requirements-video.txt](requirements-video.txt)) — action-then-narration timing model: each scene measures Playwright action elapsed time then plays narration on the settled destination page. All synthetic PMI cases + synthetic paper corpus, zero real PII, zero paid API.
+
+---
+
 ## 30-second pitch
 
 A senior PMI consultant carries 100+ deals of pattern memory. A junior has none. Six months of onboarding closes part of the gap, but most of that knowledge is in unstructured emails, PowerPoints, and tribal lore.
