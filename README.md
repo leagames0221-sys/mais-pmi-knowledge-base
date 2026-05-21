@@ -254,6 +254,19 @@ GraphRAG retrieval + NetworkX Louvain community detection + 5-axis weighted simi
 
 ---
 
+## Design history (ADR set)
+
+Architecture decisions for this repo are recorded under [`docs/adr/`](docs/adr/) using the Nygard pattern (Context / Decision / Alternatives considered / Consequences / References). The four load-bearing decisions are:
+
+- [ADR-0001 — Stack choice (Python 3.12 + FastAPI + LangGraph + Pydantic v2)](docs/adr/0001-stack-choice.md)
+- [ADR-0002 — GraphRAG core self-built on NetworkX Louvain (not vendored Microsoft GraphRAG)](docs/adr/0002-graphrag-self-built.md)
+- [ADR-0003 — Five-stage hybrid retrieval (BM25 + dense e5 + cross-encoder + LLM rerank + citation engine)](docs/adr/0003-five-stage-hybrid-retrieval.md)
+- [ADR-0004 — Five-axis weighted similarity (industry / culture / size / integration type / financial)](docs/adr/0004-five-axis-weighted-similarity.md)
+
+Each ADR records the alternatives that were considered (with pros / cons) and the consequences (positive + negative + reversibility), so the design path is replayable end-to-end.
+
+---
+
 ## Sibling tools (M&A Intelligence Suite)
 
 - [mais-deal-matching](https://github.com/leagames0221-sys/mais-deal-matching) — sourcing
