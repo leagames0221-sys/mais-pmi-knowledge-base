@@ -8,7 +8,7 @@
 # FastAPI Web UI (T1-T4 cross-PJ inherit pattern、 doctrine: prior-art-first)
 fastapi>=0.115,<1.0
 # uvicorn ASGI server (standard extras = httptools + uvloop + websockets)
-uvicorn[standard]>=0.30,<1.0
+uvicorn[standard]>=0.47.0,<1.0
 # python-multipart (FastAPI Form() で literal 必須、 file upload + form data)
 python-multipart>=0.0.18,<1.0
 # Fernet 暗号化 (src/vault/ + assistant_vault.jsonl、 T1-T4 inherit、 CVE-fix 済 pin)
