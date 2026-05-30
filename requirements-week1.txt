@@ -5,7 +5,7 @@
 
 # === core stack (module boundaries 段階 1 OS-level primitives) ===
 # Leiden algorithm + graph data structure (BSD-3、 NumFOCUS、 T3/T4 既 inherit)
-networkx>=3.6,<4.0
+networkx>=3.6.1,<4.0
 
 # ML stack — cross-PJ python-ml-stack template Standard Pin literal apply (CVE-2026-1839 fix 込み)
 transformers>=5.0,<6.0
